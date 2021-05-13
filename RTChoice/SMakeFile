@@ -1,0 +1,8 @@
+all: RTChoice.o
+
+clean:
+   delete RTChoice
+   delete RTChoice.lnk
+
+.c.o:
+   sc ansi nostkchk nostkext uchar cnest ign=147 errrexx nominc streq noicon mccons math=standard objname=t:tmp.o link $*.c programname $*
