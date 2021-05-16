@@ -1,0 +1,7 @@
+all: GetIPTraffic
+
+clean:
+    delete GetIPTraffic *.o *.lnk quiet
+
+GetIPTraffic:
+    sc includedir=netinclude: chkabort noicons link GetIPTraffic.c 
