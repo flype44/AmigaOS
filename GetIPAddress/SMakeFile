@@ -1,0 +1,8 @@
+all: GetIPAddress.o
+
+clean:
+    delete GetIPAddress
+    delete GetIPAddress.lnk
+
+.c.o:
+    sc noicon math=standard includedir=netinclude: objname=t:tmp.o link $*.c programname $*
