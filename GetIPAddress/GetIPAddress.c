@@ -6,7 +6,7 @@
 		
 	SYNOPSIS
 		
-		No arguments
+		DEBUG/S
 		
 	LOCATION
 		
@@ -18,7 +18,7 @@
 		
 	INPUTS
 		
-		NONE
+		DEBUG/S  - Print the error messages, instead of "N/A".
 		
 	RESULT
 		
@@ -67,7 +67,18 @@ struct Library *SocketBase;
 
 /*****************************************************************************/
 
-BOOL GetIPAddress(VOID)
+#define ERRORMSG "N/A\n"
+
+STRPTR TEMPLATE = "DEBUG/S";
+
+enum {
+    OPT_DEBUG,   /* Print the error messages      */
+    OPT_COUNT    /* Number of supported arguments */
+};
+
+/*****************************************************************************/
+
+BOOL GetIPAddress(LONG args[OPT_COUNT])
 {
     BOOL result = FALSE;
     
@@ -136,20 +147,23 @@ BOOL GetIPAddress(VOID)
                 }
                 else
                 {
-                    PutStr("ioctl(SIOCGIFFLAGS) failed.\n");
+                    PutStr(args[OPT_DEBUG] ? 
+                        "ioctl(SIOCGIFFLAGS) failed.\n" : ERRORMSG);
                 }
             }
         }
         else
         {
-            PutStr("ioctl(SIOCGIFCONF) failed.\n");
+            PutStr(args[OPT_DEBUG] ? 
+                "ioctl(SIOCGIFCONF) failed.\n" : ERRORMSG);
         }
         
         CloseSocket(sock);
     }
     else
     {
-        PutStr("socket() failed.\n");
+        PutStr(args[OPT_DEBUG] ? 
+            "socket() failed.\n" : ERRORMSG);
     }
     
     return(result);
@@ -160,23 +174,37 @@ BOOL GetIPAddress(VOID)
 LONG main(VOID)
 {
     LONG result = RETURN_FAIL;
+    LONG args[OPT_COUNT];
+    struct RDArgs * rdargs;
     
-    if (SocketBase = OpenLibrary("bsdsocket.library", 0))
+    memset(args, 0, sizeof(args));
+    
+    if (rdargs = ReadArgs(TEMPLATE, args, NULL))
     {
-        result = RETURN_WARN;
-        
-        if (GetIPAddress())
+        if (SocketBase = OpenLibrary("bsdsocket.library", 0))
         {
-            result = RETURN_OK;
+            result = RETURN_WARN;
+            
+            if (GetIPAddress(args))
+            {
+                result = RETURN_OK;
+            }
+            
+            CloseLibrary(SocketBase);
+        }
+        else
+        {
+            PutStr(args[OPT_DEBUG] ? 
+                "No TCP/IP stack.\n" : ERRORMSG);
         }
         
-        CloseLibrary(SocketBase);
+        FreeArgs(rdargs);
     }
     else
     {
-        PutStr("No TCP/IP stack.\n");
+        PrintFault(IoErr(), "GetIPAddress");
     }
-
+    
     return(result);
 }
 
