@@ -1,0 +1,8 @@
+all: RAChoice.o
+
+clean:
+   delete RAChoice
+   delete RAChoice.lnk
+
+.c.o:
+   sc link $*.c programname $*
