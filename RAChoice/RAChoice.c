@@ -37,13 +37,16 @@
 				ERROR      - Display a ERROR pictogram.
 				QUESTION   - Display a QUESTION pictogram.
 				INSERTDISK - Display a INSERTDISK pictogram.
+        			
+        			ELSE load any supported datatype image from disk.
 		
 	RESULT
 		
 		Standard DOS return codes.
 		
 	NOTES
-		This program use the V47 system 'requester.class'.
+		This program use the V47 'classes/requester.class', 
+		and, if asked, the 'images/bitmap.image' system objects.
 		
 		To place a newline into the BODY of the requester use *n or *N.
 		
@@ -58,6 +61,10 @@
 		RAChoice "Warn" "line1*nline2" "ok|cancel" IMAGE=WARNING
                 
 		RAChoice "Warn" "line1*nline2" "ok|cancel" IMAGE=WARNING SET=MYVAR
+		
+		RAChoice "Warn" "line1*nline2" "ok|cancel" IMAGE=RAM:WARN.PNG
+		
+		RAChoice "Warn" "line1*nline2" "ok|cancel" IMAGE=RAM:WARN.info
 		
 		C:Status >T:0
 		RAChoice Status T:0 Ok FILE
@@ -98,6 +105,9 @@
 #define ALL_REACTION_MACROS
 
 #include <reaction/reaction.h>
+#include <reaction/reaction_macros.h>
+
+#include <images/bitmap.h>
 #include <classes/requester.h>
 #include <classes/window.h>
 
@@ -120,7 +130,7 @@ enum {
 
 /*****************************************************************************/
 
-STRPTR VersionTag = "$VER: RAChoice 1.0 (18.5.2021) Philippe CARPENTIER";
+STRPTR VersionTag = "$VER: RAChoice 1.1 (20.5.2021) Philippe CARPENTIER";
 
 /*****************************************************************************/
 
@@ -129,7 +139,9 @@ extern struct ExecBase *SysBase;
 extern struct Library  *IntuitionBase;
 extern struct Library  *UtilityBase;
 
+struct Library *BitMapBase;
 struct Library *RequesterBase;
+struct Image   *RequesterImage;
 
 /*****************************************************************************/
 
@@ -160,6 +172,26 @@ ULONG GetReqImage(LONG opts[OPT_COUNT])
         if (!stricmp(s, "ERROR"     )) return(REQIMAGE_ERROR     );
         if (!stricmp(s, "QUESTION"  )) return(REQIMAGE_QUESTION  );
         if (!stricmp(s, "INSERTDISK")) return(REQIMAGE_INSERTDISK);
+        
+        if (BitMapBase = OpenLibrary("images/bitmap.image", 0L))
+        {
+            struct Screen *screen;
+            
+            if(screen = LockPubScreen(NULL))
+            {
+                RequesterImage = BitMapObject,
+                    BITMAP_SourceFile, s,
+                    BITMAP_Screen, screen,
+                    EndImage;
+                
+                if (RequesterImage)
+                {
+                    return((ULONG)RequesterImage);
+                }
+                
+                UnlockPubScreen(NULL, screen);
+            }
+        }
     }
     
     return(REQIMAGE_DEFAULT);
@@ -220,7 +252,6 @@ LONG main(VOID)
         STRPTR Req_Title   = (STRPTR)args[OPT_TITLE  ];
         STRPTR Req_Body    = (STRPTR)args[OPT_BODY   ];
         STRPTR Req_Gadgets = (STRPTR)args[OPT_GADGETS];
-        ULONG  Req_Image   = GetReqImage(args);
         
         if (args[OPT_FILE])
         {
@@ -236,7 +267,7 @@ LONG main(VOID)
             
             if (RequesterBase = OpenLibrary("requester.class", 0L))
             {
-                Object *Req_Object = NewObject(REQUESTER_GetClass(), NULL, 
+                Object *Req_Object = RequesterObject, 
                     REQ_TitleText, Req_Title, TAG_DONE);
                 
                 if (Req_Object)
@@ -245,7 +276,7 @@ LONG main(VOID)
                     
                     failureCode = OpenRequesterTags(Req_Object,
                         REQ_Type,       REQTYPE_INFO,
-                        REQ_Image,      Req_Image,
+                        REQ_Image,      GetReqImage(args),
                         REQ_BodyText,   Req_File ? Req_File : Req_Body,
                         REQ_GadgetText, Req_Gadgets,
                         TAG_DONE);
@@ -287,6 +318,16 @@ LONG main(VOID)
     else
     {
         failureCode = IoErr();
+    }
+    
+    if (RequesterImage)
+    {
+        DisposeObject(RequesterImage);
+    }
+    
+    if (BitMapBase)
+    {
+        CloseLibrary(BitMapBase);
     }
     
     SetIoErr(failureCode);
