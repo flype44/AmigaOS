@@ -1,0 +1,47 @@
+   NAME
+	UPDATEICON - Update the icon default tool.
+
+   FORMAT
+        UPDATEICON <file> <default tool> [QUIET]
+
+   TEMPLATE
+        FILE/A,DEFTOOL/A,QUIET/S
+
+   PATH
+        C:UPDATEICON
+
+   FUNCTION
+        This command update the icon "default tool" of a file.
+        The associated icon (the ".info" file) must exists.
+
+   INPUTS
+        FILE/A    - File to update (without the .info).
+        DEFTOOL/A - The new Default Tool.
+        QUIET/S   - Do not printout the old value.
+
+   RESULT
+        Standard DOS return codes.
+        
+        Returns FAIL (rc = 10) if ReadArgs() failed.
+        Type "UpdateIcon ?" to get the command syntax.
+        
+        Returns FAIL (rc = 10) if icon.library cant be opened.
+        Surprising, should never happen.
+        
+        Returns WARN (rc =  5) if GetDiskObject() failed.
+        This can happen because the associated .info file doesnt exist,
+        or because the provided "FILE" include the ".info" extension (don't!).
+        
+        Returns OK (rc = 0) if the default tool has been updated.
+
+   NOTES
+        The command prints out the old default tool, before the update.
+        If this behaviour is not wished, use the "QUIET" switch.
+
+   EXAMPLES
+        $ C:UpdateIcon "Readme" "Multiview"
+
+   EXAMPLES
+        $ LIST   >T:script DIR="RAM:" PAT="#?.guide" FILES LFORMAT="C:UpdateIcon %S%S Multiview QUIET"
+        $ TYPE    T:script
+        $ EXECUTE T:script

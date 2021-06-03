@@ -1,0 +1,8 @@
+all: UpdateIcon.o
+
+clean:
+    delete UpdateIcon
+    delete UpdateIcon.lnk
+
+.c.o:
+    sc noicon math=standard objname=t:tmp.o link $*.c programname $*
