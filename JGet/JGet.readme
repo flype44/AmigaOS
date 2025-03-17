@@ -1,0 +1,95 @@
+Short:    Gets a value from a JSON file.
+Author:   flype44@gmail.com (Philippe CARPENTIER)
+Uploader: flype44@gmail.com (Philippe CARPENTIER)
+Type:     util/cli
+Version:  1.0
+Architecture: m68k-amigaos
+Replaces: util/cli/jget.lha
+
+
+JGet README 2025-03-13
+
+NAME
+
+    JGet - Gets a value from a JSON file.
+
+FORMAT
+
+    JGet <jsonfile> [<jsonpath>] [<options>]
+
+TEMPLATE
+
+    HELP,FILE/A,PATH,LIST/S,ESCAPESLASHES/S,WITHCOMMENTS/S
+
+PATH
+
+    C:JGet
+
+FUNCTION
+
+    JGet is a command line utility to retrieve a value from a JSON file.
+
+ARGUMENTS
+
+    FILE           - The JSON file to parse (mandatory).
+    PATH           - The path of the JSON value to retrieve (optional).
+    LIST           - List all the JSON paths (optional).
+    ESCAPESLASHES  - Escape slashes in the JSON values (optional).
+    WITHCOMMENTS   - For use with commented JSON files (optional).
+
+RETURN
+
+    SUCCESS (0)    - The value was retrieved successfully.
+    WARN    (5)    - The JSON file is valid but no match.
+    ERROR  (10)    - The JSON file is not valid.
+    FAIL   (20)    - The arguments are not valid.
+
+EXAMPLES
+
+    Considering this arbitrary JSON sample, 'colors.json' :
+    
+    {
+        "colors": [
+            { "name": "color1", "r": 255, "g": 128, "b": 128 },
+            { "name": "color2", "r": 128, "g": 255, "b": 128 },
+            { "name": "color3", "r": 128, "g": 128, "b": 255 }
+        ]
+    }
+    
+    1> JGet colors.json
+    
+    When the PATH argument is not provided, 
+    JGet will outputs all the JSON content, prettyfied.
+    
+    1> JGet colors.json LIST
+    
+    When the LIST argument is provided, 
+    JGet will outputs all the valid JSON paths.
+    
+    1> JGet colors.json .colors
+    
+    When the PATH argument is the name of an array,
+    JGet will outputs the corresponding JSON array, prettyfied.
+    
+    1> JGet colors.json .colors[0]
+    
+    When the PATH argument is the name of an object,
+    JGet will outputs the corresponding JSON object, prettyfied.
+    
+    1> JGet colors.json .colors[0].name
+    
+    When the PATH argument is the name of a value,
+    JGet will outputs the corresponding JSON value, prettyfied.
+
+REMARK
+
+    JGet is build using Amiga-m68k SAS/C 6.59.
+    JGet use the Parson JSON parser, version 1.1.0.
+    http://aminet.net/dev/c/parson.lha
+    http://aminet.net/package/dev/c/parson
+    http://kgabis.github.com/parson/
+    Copyright (c) 2012 - 2020 Krzysztof Gabis
+
+SEE ALSO
+
+    JQ is a similar, but more powerful, POSIX command line utility.
