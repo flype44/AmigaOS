@@ -1,0 +1,19 @@
+#################################################
+#
+# SAS/C Makefile for "ShowSanaDev"
+# for AmigaOS M68K SAS/C 6.59 Compiler
+# 
+#################################################
+
+OUTFILE=ShowSanaDev
+
+OBJECTS=ShowSanaDev.o NSDCheck.o
+
+all: $(OUTFILE)
+
+clean:
+	@delete $(OUTFILE).lnk quiet force
+	@delete $(OBJECTS) quiet force
+
+$(OUTFILE): $(OBJECTS)
+	sc math=standard NOICONS link $(OBJECTS)
