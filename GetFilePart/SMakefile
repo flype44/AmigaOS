@@ -1,0 +1,16 @@
+# SAS/C 6.59 smakefile for GetFilePart
+
+COMPILER=sc
+OUTFILE=GetFilePart
+OBJECTS=GetFilePart.o
+
+all: $(OUTFILE)
+
+clean:
+	@delete $(OUTFILE).o $(OUTFILE).lnk
+
+aminet:
+	@lha -a -r a $(OUTFILE).lha
+
+$(OUTFILE): $(OBJECTS)
+	$(COMPILER) LINK $(OBJECTS)
