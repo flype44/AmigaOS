@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <dos/dos.h>
+#include <dos/dosextens.h>
 #include <dos/filehandler.h>
 #include <exec/exec.h>
 #include <proto/dos.h>
@@ -21,7 +22,7 @@
  *****************************************************************************/
 
 #define APPNAME    "FindDevice"
-#define APPVERSION "1.0"
+#define APPVERSION "1.1"
 #define APPAUTHOR  "Philippe CARPENTIER"
 #define TEMPLATE   "NAME,TYPE,DEVICE,HANDLER,LIST/S,HELP/S"
 #define MAX_PATH   4096
@@ -138,6 +139,9 @@ BOOL FindDevice(STRPTR dosName, STRPTR dosType, STRPTR deviceName, STRPTR handle
 								
 								if (a && b && c && d)
 								{
+									UBYTE byteCount = nameStr[0];
+									strncpy(bufName, &nameStr[1], byteCount);
+									bufName[byteCount] = '\0';
 									PutStr(bufName);
 									PutStr(":\n");
 									result = TRUE;
