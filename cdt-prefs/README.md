@@ -22,6 +22,8 @@ Download and install on your AmigaOS the `C-DataType` archive from `Aminet` :
 
 ### Install `cdt_prefs.lha` :
 
+Download and install on your AmigaOS this project (cdt-prefs) archive from `Aminet` :
+
 * https://aminet.net/package/util/dtype/cdt_prefs (not yet available)
 * https://aminet.net/util/dtype/cdt_prefs.lha (not yet available)
 
