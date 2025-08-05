@@ -1,10 +1,13 @@
 # cdt-prefs
 
+## Introduction
+
 This folder contains **color schemes** for the AmigaOS `C-DataType` by **Stefan Ruppert**. This datatype enables viewing C and C++ source code (`.c`, `.h`, `.cpp`) in `MultiView` with enhanced syntax highlighting.
 
 To be honest, for a program written in 1995, it does in an elegant way, by using a clean and robust `Bison`/`Yacc` implementation, with an efficient grammar, that still is OK nowadays (but could be improved to support the `C99` grammar), also the rendering was well designed by the author, by offering the end-users to customise the preferences file, in `ENV:Datatypes/c.prefs`. That's where this project started, the original archive only provides a basic preferences file, and i wanted to see what some modern well-known color-schemes would looks like with it, particularily on beefed systems. And yeah it does very well! so i thought having a database of nice color-schemes could be useful for the Amiga community, and also might be welcomed for other projects.
 
 ## Previews
+
 ![Preview](cdt-prefs-1.png?raw=true)
 ![Preview](cdt-prefs-2.png?raw=true)
 
@@ -35,11 +38,11 @@ Or set these as ToolTypes in the MultiView icon.
 
 ## About
 
-This project includes a custom `JSON` catalog of color schemes from popular editors and a Python script (`cdt-prefs-make-all.py`) to generate preference files.
+This project includes a custom `JSON` catalog of color schemes from popular editors and a `Python` script (`cdt-prefs-make-all.py`) to generate preference files.
 
-It contains a collection of various `Light` and `Dark` color-schemes coming from Atom, GitHub, IntelliJ, KWrite, VSCode, SublimeText, and some other ones.
+It contains a collection of various **Light** and **Dark** color-schemes coming from Atom, GitHub, IntelliJ, KWrite, VSCode, SublimeText, and some other ones.
 
-You can add new schemes or modify keywords and types as needed. if so it's encouraged to `Pull-Request` this repository.
+You can add new ones or modify keywords and types as needed. If so you are encouraged to `Pull-Request` this repository.
 
 See `cdt-prefs.json` and the script for details.
 
