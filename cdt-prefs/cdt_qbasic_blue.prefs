@@ -1,0 +1,46 @@
+; HEADER
+; cdt_qbasic_blue.prefs
+; QBasic Blue color scheme for the AmigaOS C-DataType by Stefan Ruppert
+; Classic QBasic blue background with retro yellow and cyan highlights
+; Save this file to ENV:Datatypes/c.prefs
+; Download and install this Aminet package:
+; https://aminet.net/util/dtype/cdt_39.15.lha
+; https://aminet.net/util/dtype/cdt_prefs.lha
+
+; GLOBAL
+GLOBAL TABLENGTH=4 NONESTEDCOMMENTS
+
+; CPART
+CPART=STANDARD   R=224 G=232 B=255 BGR=0   BGG=0   BGB=128
+CPART=COMMENT    R=128 G=128 B=192 BGR=0   BGG=0   BGB=128
+CPART=CPP        R=255 G=128 B=0   BGR=0   BGG=0   BGB=128
+CPART=HEADER     R=0   G=0   B=255 BGR=0   BGG=0   BGB=128 BOLD
+CPART=KEYWORD    R=0   G=0   B=192 BGR=0   BGG=0   BGB=128 BOLD
+CPART=STORAGE    R=0   G=0   B=192 BGR=0   BGG=0   BGB=128
+CPART=TYPES      R=0   G=128 B=128 BGR=0   BGG=0   BGB=128
+CPART=TYPENAME   R=0   G=128 B=128 BGR=0   BGG=0   BGB=128
+CPART=STRING     R=255 G=0   B=255 BGR=0   BGG=0   BGB=128
+CPART=NUMBER     R=255 G=128 B=0   BGR=0   BGG=0   BGB=128
+
+; USERTYPES
+USERTYPES bit int8_t uint8_t int16_t uint16_t int32_t uint32_t int64_t uint64_t size_t
+USERTYPES VOID BOOL Object Class APTR BADDR BPTR BSTR CPTR IPTR
+USERTYPES RPTR STRPTR CONST_APTR CONST_STRPTR BYTE UBYTE BYTEBITS BYTEMASK LONG ULONG
+USERTYPES LONGBITS SHORT USHORT WORD UWORD WORDBITS FLOAT DOUBLE TEXT JSON_Array
+USERTYPES JSON_Object JSON_Value JSON_Value_Type JSON_Status MAX MIN
+
+; USERKEYWORDS
+USERKEYWORDS ASM CONST GLOBAL IMPORT REG REGISTER SAVEDS STATIC break case
+USERKEYWORDS char const continue default do double else enum exit float
+USERKEYWORDS for goto if inline int long protected public return short
+USERKEYWORDS signed sizeof struct switch typedef union unsigned virtual void volatile
+USERKEYWORDS while __asm __saveds __regargs __stdargs LibCall
+
+; USERSTORAGE
+USERSTORAGE auto extern register static NULL DOSTRUE DOSFALSE TRUE FALSE MEMF_24BITDMA
+USERSTORAGE MEMF_ANY MEMF_CHIP MEMF_CLEAR MEMF_FAST MEMF_KICK MEMF_LARGEST MEMF_LOCAL MEMF_PUBLIC MEMF_REVERSE MEMF_TOTAL
+USERSTORAGE MODE_OLDFILE MODE_NEWFILE MODE_READWRITE RETURN_OK RETURN_WARN RETURN_ERROR RETURN_FAIL SIGBREAKB_CTRL_C SIGBREAKB_CTRL_D SIGBREAKB_CTRL_E
+USERSTORAGE SIGBREAKB_CTRL_F SIGBREAKF_CTRL_C SIGBREAKF_CTRL_D SIGBREAKF_CTRL_E SIGBREAKF_CTRL_F TAG_DONE TAG_END TAG_IGNORE TAG_MORE TAG_SKIP
+USERSTORAGE TAG_USER memcpy memset printf sprintf snprintf strcat strchr strlen strncat
+USERSTORAGE strncmp strncpy strnicmp strstr strtod tolower toupper fopen fclose ferror
+USERSTORAGE rewind seek
