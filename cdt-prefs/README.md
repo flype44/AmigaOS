@@ -29,9 +29,11 @@ Run >NIL: Multiview <file> FONTNAME=Dina FONTSIZE=13
 ```
 
 Please note, like any source code, it is best-viewed with a `fixed-length` font, such as the `Dina.font`, or any other fixed-font.
-https://aminet.net/package/text/bfont/Dina
 
-# more about this project
+* https://aminet.net/package/text/bfont/Dina
+
+
+# more information about this project
 
 This project consists of an __own-made__ `JSON` catalog file (see `cdt-prefs.json`) which contains various color-schemes from famous world-wide text-editors.
 
