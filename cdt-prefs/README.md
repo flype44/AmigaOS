@@ -9,7 +9,7 @@ The `C-DataType` offers to view `C-Language` and `CPP-Language` source codes in 
 
 # usage on amigaos
 
-This package requires to download and install on your AmigaOS setup the `C-DataType` archive in `Aminet` :
+This package requires to download and install on your AmigaOS setup the `C-DataType` archive from `Aminet` :
 
 * https://aminet.net/package/util/dtype/cdt_39.15
 * https://aminet.net/util/dtype/cdt_39.15.lha
