@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This folder contains a collection of **C and C++ syntax highlighting** color-schemes to be used with the AmigaOS `C-DataType` by **Stefan Ruppert** [**1**]. Various retro and modern **Light** and **Dark** color-schemes are provided, coming from Atom, GitHub, IntelliJ, KWrite, VSCode, SublimeText, and some other ones.
+This folder contains a collection of **C and C++ syntax highlighting color-schemes** to be used with the AmigaOS `C-DataType` by **Stefan Ruppert** [**1**]. Various retro and modern **Light** and **Dark** color-schemes are provided, coming from Atom, GitHub, IntelliJ, KWrite, VSCode, SublimeText, and some other ones.
 
 The main part of the project is the `JSON` catalog (`cdt-prefs.json`) and a `Python` script (`cdt-prefs-make-all.py`) to generate preference files.
 
