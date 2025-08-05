@@ -1,8 +1,6 @@
 # cdt-prefs
 
-This folder contains __color-schemes__ for the AmigaOS `C-DataType` by __Stefan Ruppert__.
-
-The `C-DataType` offers to view `C-Language` source codes (.c, .h, .cpp) in `MultiView`.
+This folder contains __color-schemes__ for the AmigaOS `C-DataType` by __Stefan Ruppert__. This datatype offers to view C and C++ source codes (.c, .h, .cpp) in `MultiView`, and to be honest, for a program written in 1995, it does it very well, in an elegant way, by using a clean and robust `Bison`/`Yacc` implementation, with an efficient grammar, that still is OK nowadays, also the rendering was well designed by the author, by offering the end-users to customise the preferences file, in `ENV:Datatypes/c.prefs`. That's where this project started, the original archive only provides a basic preferences file, and i wanted to see what some modern well-known color-scheme would looks like with it, particularily on `RTG` systems. And yeah it does very well! so i thought having a database of nice color-schemes could be a nice idea for the Amiga community, and also might be welcomed for other projects.
 
 ### Preview 1:
 ![Preview](https://github.com/flype44/AmigaOS/blob/main/cdt-prefs/cdt-prefs-1.png?raw=true)
@@ -24,8 +22,8 @@ Download and install on your AmigaOS the `C-DataType` archive from `Aminet` :
 
 Download and install on your AmigaOS this project (cdt-prefs) archive from `Aminet` :
 
-* https://aminet.net/package/util/dtype/cdt_prefs (not yet available)
-* https://aminet.net/util/dtype/cdt_prefs.lha (not yet available)
+* https://aminet.net/package/util/dtype/cdt_prefs (available soon)
+* https://aminet.net/util/dtype/cdt_prefs.lha (available soon)
 
 Copy all the `cdt_` files of this repository, preferably into the `ENVARC:Datatypes/cdt-prefs` folder.
 
@@ -142,4 +140,41 @@ Exported: cdt_yaru.prefs
 Exported: cdt_zenburn.prefs
 
 Done.
+```
+
+Additionally this C test sample is provided to see the syntax colorisation :
+
+```c
+/* C-Language Syntax Highlighting */
+
+#include <stdio.h>
+#include "main.h"
+
+#define D(...) \
+    KPrintF(__VA_ARGS__)
+
+#ifndef PI
+#define PI 3.141592653589793
+#endif
+
+static const double pi = PI;
+
+/* struct */
+typedef struct Point {
+    int x, y; // coordinates
+} Point;
+
+/* entry point */
+int main(int argc, char ** argv)
+{
+    while (--argc > 0)
+    {
+        printf("%s ", argv[argc]);
+    }
+    
+    Point p = { 1, 2 };
+    printf("x=%d y=%d\n", p.x, p.y);
+    
+    return 0;
+}
 ```
