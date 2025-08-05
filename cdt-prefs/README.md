@@ -37,23 +37,13 @@ Or set these as ToolTypes in the MultiView icon.
 
 This project includes a custom `JSON` catalog of color schemes from popular editors and a Python script (`cdt-prefs-make-all.py`) to generate preference files.
 
-You can add new schemes or modify keywords and types as needed.
+It contains a collection of various `Light` and `Dark` color-schemes coming from Atom, GitHub, IntelliJ, KWrite, VSCode, SublimeText, and some other ones.
+
+You can add new schemes or modify keywords and types as needed. if so it's encouraged to `Pull-Request` this repository.
 
 See `cdt-prefs.json` and the script for details.
 
-The catalog contains a collection of various `Light` and `Dark` color-schemes coming from Atom, GitHub, IntelliJ, KWrite, VSCode, SublimeText, and some other ones.
-
-The `JSON` __schema__ supports all the `C-DataType` preferences, as described in the Datatype documentation (see `cdt_39.15\cdt\doc\c_dtc.doc`).
-
-Then there is an __own-made__ `Python` script (see `cdt-prefs-make-all.py`) to generate all the preference files, one per color-scheme.
-
-The preferences files are already generated and provided in this repository but you can add more to the collection, and/or modify the `user-keywords`, the `user-types`, and the `user-storage` tokens.
-
-The `Python` script as been used and tested under `WSL/Ubuntu`, but can be used on any correctely installed `Python3` setup.
-
-Not mandatory but if you need to regenerate the preferences files, __execute the script__ like this :
-
-### Generate files
+### Generate the color-schemes
 
 ```sh
 python3 ./cdt-prefs-make-all.py
