@@ -2,7 +2,7 @@
 
 This folder contains __color-schemes__ for the AmigaOS `C-DataType` by __Stefan Ruppert__.
 
-The `C-DataType` offers to view `C-Language` and `CPP-Language` source codes in `MultiView`.
+The `C-DataType` offers to view `C-Language` source codes (.c, .h, .cpp) in `MultiView`.
 
 ### Preview 1:
 ![Preview](https://github.com/flype44/AmigaOS/blob/main/cdt-prefs/cdt-prefs-1.png?raw=true)
@@ -15,7 +15,7 @@ The `C-DataType` offers to view `C-Language` and `CPP-Language` source codes in 
 
 ### Install `cdt_39.15.lha` :
 
-This package requires to download and install on your AmigaOS setup the `C-DataType` archive from `Aminet` :
+Download and install on your AmigaOS the `C-DataType` archive from `Aminet` :
 
 * https://aminet.net/package/util/dtype/cdt_39.15
 * https://aminet.net/util/dtype/cdt_39.15.lha
@@ -29,14 +29,14 @@ Copy all the `cdt_` files of this repository, preferably into the `ENVARC:Dataty
 
 ### Install `Dina.lha` :
 
-Please note, like any source code, it is best-viewed with a `fixed-length` font, such as the `Dina.font`, or any other fixed-font.
+Best-viewed with a `fixed-length` font, such as the `Dina.font`, or any other well-suited fixed-font.
 
 * https://aminet.net/package/text/bfont/Dina
 * https://aminet.net/text/bfont/Dina.lha
 
 ### Update your `C-DataType` preference file :
 
-Once all installed, you can change your `C-DataType` preference file like this :
+Once all installed, change your `C-DataType` preference file like this :
 
 ```bash
 C:Copy FROM=ENVARC:Datatypes/cdt-prefs/cdt_atom_onedark.prefs TO=ENV:Datatypes/c.prefs
