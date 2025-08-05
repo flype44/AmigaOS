@@ -1,70 +1,47 @@
 # cdt-prefs
 
-This folder contains __color-schemes__ for the AmigaOS `C-DataType` by __Stefan Ruppert__. This datatype offers to view C and C++ source codes (.c, .h, .cpp) in `MultiView`, and to be honest, for a program written in 1995, it does it very well, in an elegant way, by using a clean and robust `Bison`/`Yacc` implementation, with an efficient grammar, that still is OK nowadays, also the rendering was well designed by the author, by offering the end-users to customise the preferences file, in `ENV:Datatypes/c.prefs`. That's where this project started, the original archive only provides a basic preferences file, and i wanted to see what some modern well-known color-scheme would looks like with it, particularily on `RTG` systems. And yeah it does very well! so i thought having a database of nice color-schemes could be a nice idea for the Amiga community, and also might be welcomed for other projects.
+This folder contains **color schemes** for the AmigaOS `C-DataType` by **Stefan Ruppert**. This datatype enables viewing C and C++ source code (`.c`, `.h`, `.cpp`) in `MultiView` with enhanced syntax highlighting.
 
-### Preview 1:
-![Preview](https://github.com/flype44/AmigaOS/blob/main/cdt-prefs/cdt-prefs-1.png?raw=true)
+To be honest, for a program written in 1995, it does in an elegant way, by using a clean and robust `Bison`/`Yacc` implementation, with an efficient grammar, that still is OK nowadays (but could be improved to support the `C99` grammar), also the rendering was well designed by the author, by offering the end-users to customise the preferences file, in `ENV:Datatypes/c.prefs`. That's where this project started, the original archive only provides a basic preferences file, and i wanted to see what some modern well-known color-schemes would looks like with it, particularily on beefed systems. And yeah it does very well! so i thought having a database of nice color-schemes could be useful for the Amiga community, and also might be welcomed for other projects.
 
-### Preview 2:
-![Preview](https://github.com/flype44/AmigaOS/blob/main/cdt-prefs/cdt-prefs-2.png?raw=true)
+## Previews
+![Preview](cdt-prefs-1.png?raw=true)
+![Preview](cdt-prefs-2.png?raw=true)
 
+## Installation
 
-# Usage on AmigaOS
+1. **Install C-DataType**  
+   Download from [Aminet](https://aminet.net/util/dtype/cdt_39.15.lha) and follow the installation instructions.
 
-### Install `cdt_39.15.lha` :
+2. **Install cdt-prefs**  
+   Download this project's archive (links coming soon) and copy all `cdt_` files to `ENVARC:Datatypes/cdt-prefs`.
 
-Download and install on your AmigaOS the `C-DataType` archive from `Aminet` :
+3. **Install a Fixed-Width Font (Recommended)**  
+   [Dina font](https://aminet.net/text/bfont/Dina.lha) is recommended for best viewing.
 
-* https://aminet.net/package/util/dtype/cdt_39.15
-* https://aminet.net/util/dtype/cdt_39.15.lha
+## Usage
 
-### Install `cdt_prefs.lha` :
-
-Download and install on your AmigaOS this project (cdt-prefs) archive from `Aminet` :
-
-* https://aminet.net/package/util/dtype/cdt_prefs (available soon)
-* https://aminet.net/util/dtype/cdt_prefs.lha (available soon)
-
-Copy all the `cdt_` files of this repository, preferably into the `ENVARC:Datatypes/cdt-prefs` folder.
-
-### Install `Dina.lha` :
-
-Best-viewed with a `fixed-length` font, such as the `Dina.font`, or any other well-suited fixed-font.
-
-* https://aminet.net/package/text/bfont/Dina
-* https://aminet.net/text/bfont/Dina.lha
-
-### Update your `C-DataType` preference file :
-
-Once all installed, change your `C-DataType` preference file like this :
-
-```bash
+1. Update your C-DataType preferences:
+```sh
 C:Copy FROM=ENVARC:Datatypes/cdt-prefs/cdt_atom_onedark.prefs TO=ENV:Datatypes/c.prefs
 ```
 
-### Open some C-source file from `MultiView` :
-
-Finally, open a `C-Language` (.c or .h or .cpp) source file in `MultiView` :
-
-```bash
+2. Open a C source file in MultiView:
+```sh
 Run >NIL: Multiview <file> FONTNAME=Dina FONTSIZE=13
 ```
 
-The `FONTNAME` and `FONTSIZE` arguments can also be set as `ToolTypes` in the `MultiView` icon (.info).
+Or set these as ToolTypes in the MultiView icon.
 
-# More information about this project
+## About
 
-This project consists of an __own-made__ `JSON` catalog file (see `cdt-prefs.json`) which contains various color-schemes from famous world-wide text-editors.
+This project includes a custom `JSON` catalog of color schemes from popular editors and a Python script (`cdt-prefs-make-all.py`) to generate preference files.
 
-In this catalog, you will find a collection of various `Light` and/or `Dark` color-schemes as used in :
+You can add new schemes or modify keywords and types as needed.
 
-* Atom, 
-* GitHub, 
-* IntelliJ, 
-* KWrite,
-* VSCode, 
-* SublimeText,
-* And many other ones.
+See `cdt-prefs.json` and the script for details.
+
+The catalog contains a collection of various `Light` and `Dark` color-schemes coming from Atom, GitHub, IntelliJ, KWrite, VSCode, SublimeText, and some other ones.
 
 The `JSON` __schema__ supports all the `C-DataType` preferences, as described in the Datatype documentation (see `cdt_39.15\cdt\doc\c_dtc.doc`).
 
@@ -78,13 +55,13 @@ Not mandatory but if you need to regenerate the preferences files, __execute the
 
 ### Generate files
 
-```bash
+```sh
 python3 ./cdt-prefs-make-all.py
 ```
 
 ### The output should be :
 
-```bash
+```sh
 Loading catalog cdt-prefs.json...
 Loaded.
 
@@ -141,6 +118,8 @@ Exported: cdt_zenburn.prefs
 
 Done.
 ```
+
+## Testing
 
 Additionally this C test sample is provided to see the syntax colorisation :
 
