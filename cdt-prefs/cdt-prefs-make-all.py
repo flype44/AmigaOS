@@ -2,7 +2,7 @@
 # Name:        cdt-prefs-make-all.py
 # Version:     1.0
 # Description: Preferences files builder for the AmigaOS C-datatype by Stefan Ruppert.
-# Usage:       python3 cdt-prefs-make-all.py
+# Usage:       python3 ./cdt-prefs-make-all.py
 # Requires:    https://aminet.net/util/dtype/cdt_39.15.lha
 #
 
@@ -126,6 +126,6 @@ for theme in data["catalog"]:
     filename = f"cdt_{theme['id']}.prefs"
     with open(filename, "w") as outf:
         outf.write("\n".join(lines))
-    print(f"Exported : {filename}")
+    print(f"Exported: {filename}")
 
 print(f"\nDone.")
