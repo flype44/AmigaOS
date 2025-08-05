@@ -104,42 +104,42 @@ user_types:             46 items
 catalog_items:          36 items
 
 Exporting catalog items:
-Exported : cdt_atom_onelight.prefs
-Exported : cdt_atom_onedark.prefs
-Exported : cdt_borland_turbovision.prefs
-Exported : cdt_cobalt.prefs
-Exported : cdt_craftex_nightfall.prefs
-Exported : cdt_dracula.prefs
-Exported : cdt_dusk.prefs
-Exported : cdt_gameboy.prefs
-Exported : cdt_github_light.prefs
-Exported : cdt_github_light_colorblind.prefs
-Exported : cdt_github_light_high_contrast.prefs
-Exported : cdt_github_dark.prefs
-Exported : cdt_github_dark_colorblind.prefs
-Exported : cdt_github_dark_high_contrast.prefs
-Exported : cdt_github_dark_dimmed.prefs
-Exported : cdt_gruvbox_dark.prefs
-Exported : cdt_intellij_light.prefs
-Exported : cdt_intellij_dark.prefs
-Exported : cdt_kwrite_catppuccin_mocha.prefs
-Exported : cdt_midnight.prefs
-Exported : cdt_midnight_sea.prefs
-Exported : cdt_modus_alt_syntax.prefs
-Exported : cdt_monokai.prefs
-Exported : cdt_obsidian.prefs
-Exported : cdt_plainfocus.prefs
-Exported : cdt_qbasic_blue.prefs
-Exported : cdt_solarized_light.prefs
-Exported : cdt_solarized_dark.prefs
-Exported : cdt_sublimetext_monokai.prefs
-Exported : cdt_twilight.prefs
-Exported : cdt_vscode_light.prefs
-Exported : cdt_vscode_dark.prefs
-Exported : cdt_vt100_amber.prefs
-Exported : cdt_vt100_green.prefs
-Exported : cdt_yaru.prefs
-Exported : cdt_zenburn.prefs
+Exported: cdt_atom_onelight.prefs
+Exported: cdt_atom_onedark.prefs
+Exported: cdt_borland_turbovision.prefs
+Exported: cdt_cobalt.prefs
+Exported: cdt_craftex_nightfall.prefs
+Exported: cdt_dracula.prefs
+Exported: cdt_dusk.prefs
+Exported: cdt_gameboy.prefs
+Exported: cdt_github_light.prefs
+Exported: cdt_github_light_colorblind.prefs
+Exported: cdt_github_light_high_contrast.prefs
+Exported: cdt_github_dark.prefs
+Exported: cdt_github_dark_colorblind.prefs
+Exported: cdt_github_dark_high_contrast.prefs
+Exported: cdt_github_dark_dimmed.prefs
+Exported: cdt_gruvbox_dark.prefs
+Exported: cdt_intellij_light.prefs
+Exported: cdt_intellij_dark.prefs
+Exported: cdt_kwrite_catppuccin_mocha.prefs
+Exported: cdt_midnight.prefs
+Exported: cdt_midnight_sea.prefs
+Exported: cdt_modus_alt_syntax.prefs
+Exported: cdt_monokai.prefs
+Exported: cdt_obsidian.prefs
+Exported: cdt_plainfocus.prefs
+Exported: cdt_qbasic_blue.prefs
+Exported: cdt_solarized_light.prefs
+Exported: cdt_solarized_dark.prefs
+Exported: cdt_sublimetext_monokai.prefs
+Exported: cdt_twilight.prefs
+Exported: cdt_vscode_light.prefs
+Exported: cdt_vscode_dark.prefs
+Exported: cdt_vt100_amber.prefs
+Exported: cdt_vt100_green.prefs
+Exported: cdt_yaru.prefs
+Exported: cdt_zenburn.prefs
 
 Done.
 ```
