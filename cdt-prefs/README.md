@@ -10,8 +10,11 @@ The main part of the project is the `JSON` catalog (`cdt-prefs.json`) and a `Pyt
 
 ## Previews
 
-![Preview](cdt-prefs-1.png?raw=true)
-![Preview](cdt-prefs-2.png?raw=true)
+1.
+  ![Preview](cdt-prefs-1.png?raw=true)
+
+2.
+  ![Preview](cdt-prefs-2.png?raw=true)
 
 ## Installation
 
@@ -44,12 +47,12 @@ You can add new schemes or modify keywords and types as needed. If so you are en
 
 See `cdt-prefs.json` and the script for details, also better read Stefan Ruppert's documentation (`cdt/doc/c_dtc.doc`).
 
+Command line :
 ```sh
 python3 ./cdt-prefs-make-all.py
 ```
 
 The output should be :
-
 ```sh
 Loading catalog cdt-prefs.json...
 Loaded.
@@ -110,7 +113,7 @@ Done.
 
 ## Testing
 
-Additionally this C test sample is provided to see the syntax colorisation :
+Additionally `cdt-sample.c` is provided to see the syntax colorisation :
 
 ```c
 /* C-Language Syntax Highlighting */
