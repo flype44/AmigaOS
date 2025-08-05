@@ -2,11 +2,11 @@
 
 ## Introduction
 
-This folder contains a collection of **C and C++ syntax highlighting** color-schemes to be used with the AmigaOS `C-DataType` by **Stefan Ruppert** [1]. Various retro and modern **Light** and **Dark** color-schemes are provided, coming from Atom, GitHub, IntelliJ, KWrite, VSCode, SublimeText, and some other ones.
+This folder contains a collection of **C and C++ syntax highlighting** color-schemes to be used with the AmigaOS `C-DataType` by **Stefan Ruppert** [**1**]. Various retro and modern **Light** and **Dark** color-schemes are provided, coming from Atom, GitHub, IntelliJ, KWrite, VSCode, SublimeText, and some other ones.
 
 The main part of the project is the `JSON` catalog (`cdt-prefs.json`) and a `Python` script (`cdt-prefs-make-all.py`) to generate preference files.
 
-[1]: This datatype enables viewing C and C++ source code (`.c`, `.h`, `.cpp`) in `MultiView` with enhanced syntax highlighting. For a program written in 1995, it does in an elegant way, by using a clean and robust `Bison`/`Yacc` implementation, with an efficient grammar, that still is OK nowadays (but could be improved to support the `C99` grammar), also the rendering was well designed by the author, by offering the end-users to customise the preferences file, in `ENV:Datatypes/c.prefs`. That's where this project started, the original archive only provides a basic preferences file, and i wanted to see what some modern well-known color-schemes would looks like with it, particularily on beefed systems. And yeah it does very well! so i thought having a database of nice color-schemes could be useful for the Amiga community, and also might be welcomed for other projects.
+[**1**]: This datatype enables viewing C and C++ source code (`.c`, `.h`, `.cpp`) in `MultiView` with enhanced syntax highlighting. For a program written in 1995, it does in an elegant way, by using a clean and robust `Bison`/`Yacc` implementation, with an efficient grammar, that still is OK nowadays (but could be improved to support the `C99` grammar), also the rendering was well designed by the author, by offering the end-users to customise the preferences file, in `ENV:Datatypes/c.prefs`. That's where this project started, the original archive only provides a basic preferences file, and i wanted to see what some modern well-known color-schemes would looks like with it, particularily on beefed systems. And yeah it does very well! so here is a database of nice color-schemes shared to the Amiga community, and also might be welcomed for other projects.
 
 ## Previews
 
