@@ -366,11 +366,13 @@ LONG main(VOID)
         STRPTR Req_Gadgets = (STRPTR)args[OPT_GADGETS];
         
         bDEBUG  = (args[OPT_DEBUG ]  ? TRUE : FALSE);
-        bQUIET  = (args[OPT_QUIET ]  ? TRUE : FALSE);
-        bQUIET |= (args[OPT_SET   ]) ? TRUE : FALSE;
-        bQUIET |= (args[OPT_SETENV]) ? TRUE : FALSE;
         
-        if (bDEBUG) bQUIET = FALSE;
+        if (!bDEBUG)
+        {
+            bQUIET  = (args[OPT_QUIET ]  ? TRUE : FALSE);
+            bQUIET |= (args[OPT_SET   ]) ? TRUE : FALSE;
+            bQUIET |= (args[OPT_SETENV]) ? TRUE : FALSE;
+	}
         
         if (args[OPT_FILE])
         {
@@ -412,9 +414,9 @@ LONG main(VOID)
                         ULONG success = SetVar((STRPTR)args[OPT_SET], 
                             output, -1, LV_VAR + GVF_LOCAL_ONLY);
                         
-                        if (!success && !bQUIET)
+                        if (!success)
                         {
-                            printf("ERROR: failed to set LOCAL variable.\n");
+                            if (!bQUIET) printf("ERROR: failed to set LOCAL variable.\n");
                             failureLevel = RETURN_ERROR;
                         }
                     }
@@ -423,9 +425,9 @@ LONG main(VOID)
                         ULONG success = SetVar((STRPTR)args[OPT_SETENV], 
                             output, -1, LV_VAR + GVF_GLOBAL_ONLY);
                         
-                        if (!success && !bQUIET)
+                        if (!success)
                         {
-                            printf("ERROR: failed to set GLOBAL variable.\n");
+                            if (!bQUIET) printf("ERROR: failed to set GLOBAL variable.\n");
                             failureLevel = RETURN_ERROR;
                         }
                     }
@@ -441,23 +443,15 @@ LONG main(VOID)
             }
             else
             {
-                if (!bQUIET)
-                {
-                    printf("ERROR: failed to open requester.class.\n");
-                    failureLevel = RETURN_FAIL;
-                }
-                
+                if (!bQUIET) printf("ERROR: failed to open requester.class.\n");
+                failureLevel = RETURN_FAIL;
                 failureCode = ERROR_OBJECT_NOT_FOUND;
             }
         }
         else
         {
-            if (!bQUIET)
-            {
-                printf("ERROR: missing arguments.\n");
-                failureLevel = RETURN_FAIL;
-            }
-            
+            if (!bQUIET) printf("ERROR: missing arguments.\n");
+            failureLevel = RETURN_FAIL;
             failureCode = ERROR_REQUIRED_ARG_MISSING;
         }
         
@@ -468,12 +462,8 @@ LONG main(VOID)
     }
     else
     {
-        if (!bQUIET)
-        {
-            printf("ERROR: bad arguments.\n");
-            failureLevel = RETURN_FAIL;
-        }
-        
+        if (!bQUIET) printf("ERROR: bad arguments.\n");
+        failureLevel = RETURN_FAIL;
         failureCode = IoErr();
     }
     
