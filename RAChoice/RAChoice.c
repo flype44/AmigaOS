@@ -153,7 +153,6 @@ extern struct Library  * DatatypesBase;
 struct Library *BitMapBase;
 struct Library *RequesterBase;
 struct Image   *RequesterImage;
-struct Image   *RequesterImageAlt;
 
 BOOL bDEBUG = FALSE;
 BOOL bQUIET = FALSE;
@@ -162,32 +161,32 @@ BOOL bQUIET = FALSE;
 
 Object * LoadPicture(STRPTR name)
 {
-	Object * picture = NULL;
-	struct Screen * screen = NULL;
-	
-	if (screen = LockPubScreen(NULL))
-	{
-		picture = NewDTObject(
-			name,
-			DTA_GroupID,           GID_PICTURE,
-			DTA_SourceType,        DTST_FILE,
-			PDTA_DestMode,         PMODE_V43,
-			PDTA_FreeSourceBitMap, TRUE,
-			PDTA_Remap,            TRUE,
-			PDTA_Screen,           screen,
-			OBP_Precision,         PRECISION_EXACT,
-			OBP_FailIfBad,         FALSE,
-			TAG_DONE);
-		
-		if (picture)
-		{
-			DoDTMethod(picture, NULL, NULL, DTM_PROCLAYOUT, NULL, TRUE);
-		}
-		
-		UnlockPubScreen(NULL, screen);
-	}
-	
-	return (picture);
+    Object * picture = NULL;
+    struct Screen * screen = NULL;
+    
+    if (screen = LockPubScreen(NULL))
+    {
+        picture = NewDTObject(
+            name,
+            DTA_GroupID,           GID_PICTURE,
+            DTA_SourceType,        DTST_FILE,
+            PDTA_DestMode,         PMODE_V43,
+            PDTA_FreeSourceBitMap, TRUE,
+            PDTA_Remap,            TRUE,
+            PDTA_Screen,           screen,
+            OBP_Precision,         PRECISION_EXACT,
+            OBP_FailIfBad,         FALSE,
+            TAG_DONE);
+        
+        if (picture)
+        {
+            DoDTMethod(picture, NULL, NULL, DTM_PROCLAYOUT, NULL, TRUE);
+        }
+        
+        UnlockPubScreen(NULL, screen);
+    }
+    
+    return (picture);
 }
 
 /*****************************************************************************/
@@ -229,6 +228,7 @@ ULONG GetReqImage(LONG opts[OPT_COUNT])
                 Object * picture;
                 
                 /*
+                struct Image *RequesterImageAlt;
                 RequesterImageAlt = BitMapObject,
                     BITMAP_SourceFile, s,
                     BITMAP_Screen, screen,
@@ -241,71 +241,71 @@ ULONG GetReqImage(LONG opts[OPT_COUNT])
                 
                 if (picture = LoadPicture(s))
                 {
-					struct BitMapHeader * bitMapHeader = NULL;
-	                
-	                GetDTAttrs(picture, PDTA_BitMapHeader, &bitMapHeader, TAG_DONE);
-					
-					if (bitMapHeader)
-					{
-						APTR maskPlane = NULL;
-						struct BitMap * bitMap = NULL;
-						
-						GetDTAttrs(picture, PDTA_BitMap, &bitMap, TAG_DONE);
-						GetDTAttrs(picture, PDTA_MaskPlane, &maskPlane, TAG_DONE);
-		                
-		                if (bDEBUG)
-		                {
-			                printf("Picture:   0x%08lx\n", picture);
-			                printf("BitMap:    0x%08lx\n", bitMap);
-			                printf("BitMap.w:  %u\n",      bitMapHeader->bmh_Width);
-			                printf("BitMap.h:  %u\n",      bitMapHeader->bmh_Height);
-			                printf("MaskPlane: 0x%08lx\n", maskPlane);
-		                }
-		                
-		                if (!maskPlane && !bQUIET)
-		                {
-					        printf("WARNING: the picture maskPlane is null.\n");
-			            }
-		                
-		                RequesterImage = BitMapObject,
-		                    BITMAP_Screen,      screen,
-		                    BITMAP_Precision,   PRECISION_IMAGE,
-		                    BITMAP_BitMap,      bitMap,
-		                    BITMAP_Masking,     ((maskPlane != NULL) ? TRUE : FALSE),
-		                    BITMAP_MaskPlane,   maskPlane,
-		                    BITMAP_Width,       bitMapHeader->bmh_Width,
-		                    BITMAP_Height,      bitMapHeader->bmh_Height,
-		                    BITMAP_Transparent, ((maskPlane != NULL) ? TRUE : FALSE),
-		                    EndImage;
-					}
-					else
-					{
-		                if (!bQUIET) printf("WARNING: the bitmap header is null.\n");
-					}
+                    struct BitMapHeader * bitMapHeader = NULL;
+                    
+                    GetDTAttrs(picture, PDTA_BitMapHeader, &bitMapHeader, TAG_DONE);
+                    
+                    if (bitMapHeader)
+                    {
+                        APTR maskPlane = NULL;
+                        struct BitMap * bitMap = NULL;
+                        
+                        GetDTAttrs(picture, PDTA_BitMap, &bitMap, TAG_DONE);
+                        GetDTAttrs(picture, PDTA_MaskPlane, &maskPlane, TAG_DONE);
+                        
+                        if (bDEBUG)
+                        {
+                            printf("Picture:   0x%08lx\n", picture);
+                            printf("BitMap:    0x%08lx\n", bitMap);
+                            printf("BitMap.w:  %u\n",      bitMapHeader->bmh_Width);
+                            printf("BitMap.h:  %u\n",      bitMapHeader->bmh_Height);
+                            printf("MaskPlane: 0x%08lx\n", maskPlane);
+                        }
+                        
+                        if (!maskPlane && !bQUIET)
+                        {
+                            printf("WARNING: the picture maskPlane is null.\n");
+                        }
+                        
+                        RequesterImage = BitMapObject,
+                            BITMAP_Screen,      screen,
+                            BITMAP_Precision, Â  PRECISION_IMAGE,
+                            BITMAP_BitMap, Â     bitMap,
+                            BITMAP_Masking,     ((maskPlane != NULL) ? TRUE : FALSE),
+                            BITMAP_MaskPlane,   maskPlane,
+                            BITMAP_Width,       bitMapHeader->bmh_Width,
+                            BITMAP_Height,      bitMapHeader->bmh_Height,
+                            BITMAP_Transparent, ((maskPlane != NULL) ? TRUE : FALSE),
+                            EndImage;
+                    }
+                    else
+                    {
+                        if (!bQUIET) printf("WARNING: the bitmap header is null.\n");
+                    }
                 }
-				else
-				{
-	                if (!bQUIET) printf("WARNING: failed to load picture.\n");
-				}
+                else
+                {
+                    if (!bQUIET) printf("WARNING: failed to load picture.\n");
+                }
                 
                 UnlockPubScreen(NULL, screen);
-	        }
-			else
-			{
+            }
+            else
+            {
                 if (!bQUIET) printf("WARNING: cant lock public screen.\n");
-			}
-	    }
-		else
-		{
+            }
+        }
+        else
+        {
             if (!bQUIET) printf("WARNING: can load bitmap.image.\n");
-		}
+        }
     }
-	
-	if (RequesterImage)
-	{
-		return((ULONG)RequesterImage);
-	}
-	
+    
+    if (RequesterImage)
+    {
+        return((ULONG)RequesterImage);
+    }
+    
     return(REQIMAGE_DEFAULT);
 }
 
@@ -378,11 +378,11 @@ LONG main(VOID)
             {
                 if (!bQUIET)
                 {
-	                printf("ERROR: failed to open file `%s`.\n", Req_Body);
-	            }
+                    printf("ERROR: failed to open file `%s`.\n", Req_Body);
+                }
             }
         }
-		
+        
         if (Req_Body && Req_Gadgets)
         {
             failureCode = ERROR_NO_FREE_STORE;
@@ -410,23 +410,23 @@ LONG main(VOID)
                     if (args[OPT_SET])
                     {
                         ULONG success = SetVar((STRPTR)args[OPT_SET], 
-	                        output, -1, LV_VAR + GVF_LOCAL_ONLY);
+                            output, -1, LV_VAR + GVF_LOCAL_ONLY);
                         
                         if (!success && !bQUIET)
                         {
-	                        printf("ERROR: failed to set LOCAL variable.\n");
-	                        failureLevel = RETURN_ERROR;
+                            printf("ERROR: failed to set LOCAL variable.\n");
+                            failureLevel = RETURN_ERROR;
                         }
                     }
                     else if (args[OPT_SETENV])
                     {
                         ULONG success = SetVar((STRPTR)args[OPT_SETENV], 
-	                        output, -1, LV_VAR + GVF_GLOBAL_ONLY);
+                            output, -1, LV_VAR + GVF_GLOBAL_ONLY);
                         
                         if (!success && !bQUIET)
                         {
-	                        printf("ERROR: failed to set GLOBAL variable.\n");
-	                        failureLevel = RETURN_ERROR;
+                            printf("ERROR: failed to set GLOBAL variable.\n");
+                            failureLevel = RETURN_ERROR;
                         }
                     }
                     else
@@ -441,22 +441,22 @@ LONG main(VOID)
             }
             else
             {
-				if (!bQUIET)
-				{
-					printf("ERROR: failed to open requester.class.\n");
-					failureLevel = RETURN_FAIL;
-				}
-	            
-	            failureCode = ERROR_OBJECT_NOT_FOUND;
+                if (!bQUIET)
+                {
+                    printf("ERROR: failed to open requester.class.\n");
+                    failureLevel = RETURN_FAIL;
+                }
+                
+                failureCode = ERROR_OBJECT_NOT_FOUND;
             }
         }
         else
         {
-			if (!bQUIET)
-			{
-				printf("ERROR: missing arguments.\n");
-				failureLevel = RETURN_FAIL;
-			}
+            if (!bQUIET)
+            {
+                printf("ERROR: missing arguments.\n");
+                failureLevel = RETURN_FAIL;
+            }
             
             failureCode = ERROR_REQUIRED_ARG_MISSING;
         }
@@ -468,11 +468,11 @@ LONG main(VOID)
     }
     else
     {
-		if (!bQUIET)
-		{
-			printf("ERROR: bad arguments.\n");
-			failureLevel = RETURN_FAIL;
-		}
+        if (!bQUIET)
+        {
+            printf("ERROR: bad arguments.\n");
+            failureLevel = RETURN_FAIL;
+        }
         
         failureCode = IoErr();
     }
