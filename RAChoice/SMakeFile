@@ -1,8 +1,19 @@
-all: RAChoice.o
+#
+# SMakefile for RAChoice
+# 
+# Requirements:
+# C:Assign include: WORK:Develop/NDK3.2/Include_H
+# C:Assign include: SC:include/ ADD
+# 
+
+OUTFILE=RAChoice
+
+OBJECTS=RAChoice.o
+
+all: $(OUTFILE)
 
 clean:
-   delete RAChoice
-   delete RAChoice.lnk
+    @delete RAChoice RAChoice.o RAChoice.lnk QUIET FORCE
 
-.c.o:
-   sc link $*.c programname $*
+$(OUTFILE): $(OBJECTS)
+    sc MATH=STANDARD CHKABORT OPTIMIZE NOICONS STRIPDEBUG LINK $(OBJECTS)

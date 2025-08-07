@@ -1,0 +1,64 @@
+   NAME
+
+	RACHOICE
+
+   FORMAT
+
+	RACHOICE <title> <body> <gadgets> [PUBSCREEN] [SET] [SETENV] [IMAGE] [FILE] [QUIET] [DEBUG]
+
+   TEMPLATE
+
+	TITLE/A,BODY/A,GADGETS/A/M,PUBSCREEN/K,SET/K,SETENV/K,IMAGE/K,FILE/S,QUIET/S,DEBUG/S
+
+   PATH
+
+	C:RACHOICE
+
+   FUNCTION
+
+	Allows AmigaDOS scripts to use Reaction-based message requesters.
+
+	TITLE       - The text to display in the title bar of the requester.
+	BODY        - The text to display in the body of the requester.
+	GADGETS     - The text for each of the buttons.
+	PUBSCREEN   - The name of the public screen to open the requester upon.
+	SET         - The LOCAL environment variable where the result is written to.
+	SETENV      - The GLOBAL environment variable where the result is written to.
+	FILE        - The BODY argument is a filename. Its content will be used.
+	IMAGE       - The pictogram or the image path to display, among :
+			INFO       - Display a INFO pictogram.
+			WARNING    - Display a WARNING pictogram.
+			ERROR      - Display a ERROR pictogram.
+			QUESTION   - Display a QUESTION pictogram.
+			INSERTDISK - Display a INSERTDISK pictogram.
+        		ELSE load any supported datatype image from disk.
+	QUIET       - Suppress stdout messages.
+	DEBUG       - Outputs debug information.
+
+   RESULT
+
+	Standard DOS return codes.
+
+   NOTES
+
+	This program use the V47 'classes/requester.class', 
+	and, if asked, the 'images/bitmap.image' system objects.
+	
+	To place a newline into the BODY of the requester use *n or *N.
+	
+	To place a quotation mark in the BODY of the requester use *".
+
+   EXAMPLES
+
+	RAChoice Info Line Ok
+	
+	RAChoice "Info" "line1*nline2" "ok|cancel"
+	RAChoice "Warn" "line1*nline2" "ok|cancel" IMAGE=WARNING
+	RAChoice "Warn" "line1*nline2" "ok|cancel" IMAGE=WARNING SET=MYVAR
+	RAChoice "Warn" "line1*nline2" "ok|cancel" IMAGE=RAM:WARN.PNG
+	RAChoice "Warn" "line1*nline2" "ok|cancel" IMAGE=RAM:WARN.info
+	
+	C:Status >T:0
+	
+	RAChoice Status T:0 Ok FILE
+
