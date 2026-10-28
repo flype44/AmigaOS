@@ -30,8 +30,11 @@
 		
 		This means the "bsdsocket.library" must be available.
 		
-		For now, this wont work on the UAE TCP/IP implementation,
-		because it does not handle the ioctl() flag "SIOCGIFCONF".
+		The address is read with the ioctl() flags "SIOCGIFCONF" and
+		"SIOCGIFFLAGS" (AmiTCP, Roadshow). Stacks without them, such
+		as lwip-amiga, are asked through the Roadshow interface query
+		API (ObtainInterfaceList, QueryInterfaceTagList) instead.
+		The UAE TCP/IP implementation has neither.
 		
 	EXAMPLES
 		
@@ -41,6 +44,7 @@
 ******************************************************************************/
 
 #include <stdio.h>
+#include <string.h>
 #include <sys/param.h>
 #include <sys/ioctl.h>
 
@@ -49,6 +53,7 @@
 #include <proto/dos.h>
 #include <proto/exec.h>
 #include <proto/bsdsocket.h>
+#include <utility/tagitem.h>
 
 /*****************************************************************************/
 
@@ -56,12 +61,27 @@
 #define INADDR_LOOPBACK 0x7f000001 /* 127.0.0.1 */
 #endif
 
+/* Roadshow interface query API (Roadshow SDK libraries/bsdsocket.h) */
+
+#ifndef IFQ_BASE
+#define IFQ_BASE    (TAG_USER + 1900)
+#define IFQ_Address (IFQ_BASE + 14) /* struct sockaddr * */
+#define IFQ_State   (IFQ_BASE + 19) /* LONG * (SM_*)     */
+#define SM_Up       3
+#endif
+
+/* Last LVO of the query API: older stacks have shorter vector tables */
+
+#define LVO_QUERYINTERFACETAGLIST 468
+
 /*****************************************************************************/
 
-STRPTR VERSTAG = "$VER: GetIPAddress 1.0 (16.5.2021) Philippe CARPENTIER";
+STRPTR VERSTAG = "$VER: GetIPAddress 1.1 (28.10.2026) Philippe CARPENTIER";
 
+#ifdef __SASC
 extern struct Library  *DOSBase;
 extern struct ExecBase *SysBase;
+#endif
 
 struct Library *SocketBase;
 
@@ -75,6 +95,78 @@ enum {
     OPT_DEBUG,   /* Print the error messages      */
     OPT_COUNT    /* Number of supported arguments */
 };
+
+/*****************************************************************************/
+
+BOOL PrintAddress(ULONG addr)
+{
+    ULONG bytes[4];
+    ULONG in = ntohl(addr);
+    
+    if (in == INADDR_ANY || (in >> 24) == 127)
+    {
+        return(FALSE);
+    }
+    
+    bytes[0] = (in >> 24) & 255;
+    bytes[1] = (in >> 16) & 255;
+    bytes[2] = (in >>  8) & 255;
+    bytes[3] = (in      ) & 255;
+    
+    VPrintf("%ld.%ld.%ld.%ld\n", &bytes);
+    
+    return(TRUE);
+}
+
+/*****************************************************************************/
+
+BOOL QueryInterfaces(LONG args[OPT_COUNT])
+{
+    BOOL result = FALSE;
+    struct List *list;
+    struct Node *node;
+    
+    if (SocketBase->lib_NegSize < LVO_QUERYINTERFACETAGLIST)
+    {
+        PutStr(args[OPT_DEBUG] ? 
+            "No interface query API.\n" : ERRORMSG);
+        return(FALSE);
+    }
+    
+    if ((list = ObtainInterfaceList()))
+    {
+        for (node = list->lh_Head; node->ln_Succ && !result; node = node->ln_Succ)
+        {
+            struct sockaddr_in sin;
+            LONG state = SM_Up;
+            struct TagItem tags[3];
+            
+            memset(&sin, 0, sizeof(sin));
+            
+            tags[0].ti_Tag  = IFQ_Address;
+            tags[0].ti_Data = (ULONG)&sin;
+            tags[1].ti_Tag  = IFQ_State;
+            tags[1].ti_Data = (ULONG)&state;
+            tags[2].ti_Tag  = TAG_DONE;
+            
+            if (QueryInterfaceTagList(node->ln_Name, tags) == 0 && 
+                state == SM_Up && sin.sin_family == AF_INET)
+            {
+                result = PrintAddress(sin.sin_addr.s_addr);
+            }
+        }
+        
+        ReleaseInterfaceList(list);
+    }
+    
+    if (!result)
+    {
+        PutStr(args[OPT_DEBUG] ? 
+            "No interface is up.\n" : ERRORMSG);
+    }
+    
+    return(result);
+}
 
 /*****************************************************************************/
 
@@ -97,15 +189,14 @@ BOOL GetIPAddress(LONG args[OPT_COUNT])
             int len;
             struct ifreq ifreq;
             struct ifreq *ifr = ifc.ifc_req;
+            int slop;
             
-            for (len = ifc.ifc_len; len; len -= sizeof(ifreq))
+            for (len = ifc.ifc_len; len >= (int)sizeof(ifreq); len -= sizeof(ifreq))
             {
                 ifreq = *ifr;
                 
                 if (IoctlSocket(sock, SIOCGIFFLAGS, (char *)&ifreq) >= 0)
                 {
-                    int slop;
-                    
                     if ((ifreq.ifr_flags & IFF_UP) && 
                          ifr->ifr_addr.sa_family == AF_INET)
                     {
@@ -113,19 +204,8 @@ BOOL GetIPAddress(LONG args[OPT_COUNT])
                         
                         sin = (struct sockaddr_in *)&ifr->ifr_addr;
                         
-                        if(sin->sin_addr.s_addr != INADDR_ANY && 
-                           sin->sin_addr.s_addr != INADDR_LOOPBACK)
+                        if (PrintAddress(sin->sin_addr.s_addr))
                         {
-                            ULONG bytes[4];
-                            ULONG in = ntohl(sin->sin_addr.s_addr);
-                            
-                            bytes[0] = (in >> 24) & 255;
-                            bytes[1] = (in >> 16) & 255;
-                            bytes[2] = (in >>  8) & 255;
-                            bytes[3] = (in      ) & 255;
-                            
-                            VPrintf("%ld.%ld.%ld.%ld\n", &bytes);
-                            
                             result = TRUE;
                         }
                         
@@ -134,31 +214,36 @@ BOOL GetIPAddress(LONG args[OPT_COUNT])
                             break;
                         }
                     }
-                    
-                    slop = ifr->ifr_addr.sa_len - sizeof(struct sockaddr);
-                    
-                    if (slop)
-                    {
-                        ifr = (struct ifreq *) ((caddr_t)ifr + slop);
-                        len -= slop;
-                    }
-                    
-                    ifr++;
                 }
-                else
+                else if (args[OPT_DEBUG])
                 {
-                    PutStr(args[OPT_DEBUG] ? 
-                        "ioctl(SIOCGIFFLAGS) failed.\n" : ERRORMSG);
+                    PutStr("ioctl(SIOCGIFFLAGS) failed.\n");
                 }
+                
+                slop = ifr->ifr_addr.sa_len - sizeof(struct sockaddr);
+                
+                if (slop > 0)
+                {
+                    ifr = (struct ifreq *) ((caddr_t)ifr + slop);
+                    len -= slop;
+                }
+                
+                ifr++;
             }
+            
+            CloseSocket(sock);
         }
         else
         {
-            PutStr(args[OPT_DEBUG] ? 
-                "ioctl(SIOCGIFCONF) failed.\n" : ERRORMSG);
+            if (args[OPT_DEBUG])
+            {
+                PutStr("ioctl(SIOCGIFCONF) failed, trying the interface query API.\n");
+            }
+            
+            CloseSocket(sock);
+            
+            result = QueryInterfaces(args);
         }
-        
-        CloseSocket(sock);
     }
     else
     {
